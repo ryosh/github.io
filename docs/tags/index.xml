@@ -5,43 +5,6 @@
     <link>https://ryosh.github.io/tags/</link>
     <description>Recent content in Tags on ryosh.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 14 Apr 2021 20:54:52 +0900</lastBuildDate><atom:link href="https://ryosh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>AWS</title>
-      <link>https://ryosh.github.io/tags/AWS/</link>
-      <pubDate>Wed, 14 Apr 2021 20:54:52 +0900</pubDate>
-      
-      <guid>https://ryosh.github.io/tags/AWS/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Lambda</title>
-      <link>https://ryosh.github.io/tags/Lambda/</link>
-      <pubDate>Wed, 14 Apr 2021 20:54:52 +0900</pubDate>
-      
-      <guid>https://ryosh.github.io/tags/Lambda/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://ryosh.github.io/tags/Python/</link>
-      <pubDate>Wed, 14 Apr 2021 20:54:52 +0900</pubDate>
-      
-      <guid>https://ryosh.github.io/tags/Python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SAM</title>
-      <link>https://ryosh.github.io/tags/SAM/</link>
-      <pubDate>Wed, 14 Apr 2021 20:54:52 +0900</pubDate>
-      
-      <guid>https://ryosh.github.io/tags/SAM/</guid>
-      <description></description>
-    </item>
-    
+    <language>en-us</language><atom:link href="https://ryosh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
