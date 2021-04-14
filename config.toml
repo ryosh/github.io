@@ -1,0 +1,78 @@
+languageCode = "en-us"
+baseURL = "http://localhost"
+title = "ryosh.github.io"
+theme = "beautifulhugo"
+
+publishDir = "docs"
+
+# Geekblog required configuration
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+disablePathToLower = true
+
+[Params]
+    useHLJS = true
+    # subtitle = "にゃーん"
+    logo = "img/avatar-icon.png" # Expecting square dimensions
+    favicon = "img/favicon.ico"
+    dateFormat = "January 2, 2006"
+    commit = false
+    rss = false
+    comments = true
+    readingTime = false
+    wordCount = false
+    socialShare = true
+    delayDisqus = true
+    showRelatedPosts = true
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 9
+
+[taxonomies]
+  author = "authors"
+  tag = "tags"
+
+[mediaTypes]
+  [mediaTypes."application/atom+xml"]
+    suffixes = ["xml"]
+
+[outputFormats]
+  [outputFormats.Atom]
+    name = "Atom"
+    mediaType = "application/atom+xml"
+    baseName = "atom"
+    isPlainText = false
+    rel = "alternate"
+    isHTML = false
+    noUgly = true
+    permalinkable = false
+
+[outputFormats.outputs]
+  home = ["HTML", "ATOM"]
+  page = ["HTML"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML", "ATOM"]
+
+  [Author]
+    name = "ryosh"
+    github = "ryosh"
+    # twitter = "ryosh"
+
+  [[menu.main]]
+    name = "Blog"
+    url = ""
+    weight = 1
+
+  [[menu.main]]
+    name = "Tags"
+    url = "tags"
+    weight = 2
+
+  [[menu.main]]
+    name = "About"
+    url = "page/about/"
+    weight = 3
