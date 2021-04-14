@@ -1,16 +1,13 @@
 ---
-title: "My First Post"
+title: "Hugoの使い方のメモ"
 date: 2021-04-14T07:02:09+09:00
-draft: true
-tags: [ example, test ]
-categories: [ test ]
+draft: false
+tags: [ hugo ]
+categories: [ blog ]
 ---
 
-```
-aaa
-aaa
-```
 
+ローカルサーバーの起動
 ```
 hugo server -D
 ```
@@ -20,13 +17,15 @@ hugo server -D
 hugo new posts/my-first-post.md
 ```
 
-
+ローカルサーバー起動中に、`hugo new posts/xxx`を実行すると、このエラーになる。
 ```
 Error: Unable to locate config file or config directory. Perhaps you need to create a new site.
        Run `hugo help new` for details.
 ```
 
-
+HTMLの作成。
 ```
 hugo
 ```
+
+---

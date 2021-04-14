@@ -257,56 +257,56 @@ $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli
 <hr>
 <h2 id="環境">環境</h2>
 <p>SAMは前提として、Docker、AWS CLIが必要です。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ docker --version
+<pre><code>$ docker --version
 Docker version 20.10.5, build 55c4c88
 $ aws --version
 aws-cli/2.1.34 Python/3.8.8 Linux/5.4.0-52-generic exe/x86_64.ubuntu.20 prompt/off
 $ sam --version
 SAM CLI, version 1.21.1
-</code></pre></div><hr>
+</code></pre><hr>
 <h2 id="アプリケーションの作成">アプリケーションの作成</h2>
 <p><code>sam init</code>でアプリケーションを作成します。
 imageを選択する場合は、デプロイ時にECRにリポジトリを作成しておく必要があります。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ sam init
-Which template <span class="nb">source</span> would you like to use?
-        <span class="m">1</span> - AWS Quick Start Templates
-        <span class="m">2</span> - Custom Template Location
-Choice: <span class="m">1</span>
-What package <span class="nb">type</span> would you like to use?
-        <span class="m">1</span> - Zip <span class="o">(</span>artifact is a zip uploaded to S3<span class="o">)</span>
-        <span class="m">2</span> - Image <span class="o">(</span>artifact is an image uploaded to an ECR image repository<span class="o">)</span>
-Package type: <span class="m">2</span>
+<pre><code>$ sam init
+Which template source would you like to use?
+        1 - AWS Quick Start Templates
+        2 - Custom Template Location
+Choice: 1
+What package type would you like to use?
+        1 - Zip (artifact is a zip uploaded to S3)
+        2 - Image (artifact is an image uploaded to an ECR image repository)
+Package type: 2
 
 Which base image would you like to use?
-        <span class="m">1</span> - amazon/nodejs14.x-base
-        <span class="m">2</span> - amazon/nodejs12.x-base
-        <span class="m">3</span> - amazon/nodejs10.x-base
-        <span class="m">4</span> - amazon/python3.8-base
-        <span class="m">5</span> - amazon/python3.7-base
-        <span class="m">6</span> - amazon/python3.6-base
-        <span class="m">7</span> - amazon/python2.7-base
-        <span class="m">8</span> - amazon/ruby2.7-base
-        <span class="m">9</span> - amazon/ruby2.5-base
-        <span class="m">10</span> - amazon/go1.x-base
-        <span class="m">11</span> - amazon/java11-base
-        <span class="m">12</span> - amazon/java8.al2-base
-        <span class="m">13</span> - amazon/java8-base
-        <span class="m">14</span> - amazon/dotnet5.0-base
-        <span class="m">15</span> - amazon/dotnetcore3.1-base
-        <span class="m">16</span> - amazon/dotnetcore2.1-base
-Base image: <span class="m">4</span>
+        1 - amazon/nodejs14.x-base
+        2 - amazon/nodejs12.x-base
+        3 - amazon/nodejs10.x-base
+        4 - amazon/python3.8-base
+        5 - amazon/python3.7-base
+        6 - amazon/python3.6-base
+        7 - amazon/python2.7-base
+        8 - amazon/ruby2.7-base
+        9 - amazon/ruby2.5-base
+        10 - amazon/go1.x-base
+        11 - amazon/java11-base
+        12 - amazon/java8.al2-base
+        13 - amazon/java8-base
+        14 - amazon/dotnet5.0-base
+        15 - amazon/dotnetcore3.1-base
+        16 - amazon/dotnetcore2.1-base
+Base image: 4
 
-Project name <span class="o">[</span>sam-app<span class="o">]</span>: sample-app
+Project name [sam-app]: sample-app
 
 Cloning app templates from https://github.com/aws/aws-sam-cli-app-templates
 
 AWS quick start application templates:
-        <span class="m">1</span> - Hello World Lambda Image Example
-        <span class="m">2</span> - PyTorch Machine Learning Inference API
-        <span class="m">3</span> - Scikit-learn Machine Learning Inference API
-        <span class="m">4</span> - Tensorflow Machine Learning Inference API
-        <span class="m">5</span> - XGBoost Machine Learning Inference API
-Template selection: <span class="m">1</span>
+        1 - Hello World Lambda Image Example
+        2 - PyTorch Machine Learning Inference API
+        3 - Scikit-learn Machine Learning Inference API
+        4 - Tensorflow Machine Learning Inference API
+        5 - XGBoost Machine Learning Inference API
+Template selection: 1
 
     -----------------------
     Generating application:
@@ -318,7 +318,7 @@ Template selection: <span class="m">1</span>
 
     Next steps can be found in the README file at ./sample-app/README.md
 $
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree .
+</code></pre><pre><code>$ tree .
 .
 └── sample-app
     ├── README.md
@@ -337,28 +337,28 @@ $
             ├── __init__.py
             └── test_handler.py
 
-<span class="m">5</span> directories, <span class="m">11</span> files
+5 directories, 11 files
 $
-</code></pre></div><p><code>hello_world/app.py</code>の内容はこんな内容です。</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
+</code></pre><p><code>hello_world/app.py</code>の内容はこんな内容です。</p>
+<pre><code>import json
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&#34;statusCode&#34;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s2">&#34;body&#34;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;hello world&#34;</span><span class="p">,</span>
-            <span class="p">}</span>
-        <span class="p">),</span>
-    <span class="p">}</span>
-</code></pre></div><hr>
+def lambda_handler(event, context):
+    return {
+        &quot;statusCode&quot;: 200,
+        &quot;body&quot;: json.dumps(
+            {
+                &quot;message&quot;: &quot;hello world&quot;,
+            }
+        ),
+    }
+</code></pre><hr>
 <h2 id="ビルド">ビルド</h2>
 <p><code>sam build</code>でアプリケーションをビルドします。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">cd</span> sample-app/
+<pre><code>$ cd sample-app/
 sample-app$ sam build
-Building codeuri: /home/ryosh/tmp/sample-app runtime: None metadata: <span class="o">{</span><span class="s1">&#39;Dockerfile&#39;</span>: <span class="s1">&#39;Dockerfile&#39;</span>, <span class="s1">&#39;DockerContext&#39;</span>: <span class="s1">&#39;/home/ryosh/tmp/sample-app/hello_world&#39;</span>, <span class="s1">&#39;DockerTag&#39;</span>: <span class="s1">&#39;python3.8-v1&#39;</span><span class="o">}</span> functions: <span class="o">[</span><span class="s1">&#39;HelloWorldFunction&#39;</span><span class="o">]</span>
-Building image <span class="k">for</span> HelloWorldFunction <span class="k">function</span>
-Setting DockerBuildArgs: <span class="o">{}</span> <span class="k">for</span> HelloWorldFunction <span class="k">function</span>
+Building codeuri: /home/ryosh/tmp/sample-app runtime: None metadata: {'Dockerfile': 'Dockerfile', 'DockerContext': '/home/ryosh/tmp/sample-app/hello_world', 'DockerTag': 'python3.8-v1'} functions: ['HelloWorldFunction']
+Building image for HelloWorldFunction function
+Setting DockerBuildArgs: {} for HelloWorldFunction function
 Step 1/4 : FROM public.ecr.aws/lambda/python:3.8
  ---&gt; 8947af745e23
 Step 2/4 : COPY app.py requirements.txt ./
@@ -367,7 +367,7 @@ Step 2/4 : COPY app.py requirements.txt ./
 Step 3/4 : RUN python3.8 -m pip install -r requirements.txt -t .
  ---&gt; Using cache
  ---&gt; 4c6308880eff
-Step 4/4 : CMD <span class="o">[</span><span class="s2">&#34;app.lambda_handler&#34;</span><span class="o">]</span>
+Step 4/4 : CMD [&quot;app.lambda_handler&quot;]
  ---&gt; Using cache
  ---&gt; XXXX
 Successfully built XXXX
@@ -378,52 +378,52 @@ Build Succeeded
 Built Artifacts  : .aws-sam/build
 Built Template   : .aws-sam/build/template.yaml
 
-Commands you can use <span class="nv">next</span>
-<span class="o">=========================</span>
-<span class="o">[</span>*<span class="o">]</span> Invoke Function: sam <span class="nb">local</span> invoke
-<span class="o">[</span>*<span class="o">]</span> Deploy: sam deploy --guided
+Commands you can use next
+=========================
+[*] Invoke Function: sam local invoke
+[*] Deploy: sam deploy --guided
 
 $
-</code></pre></div><hr>
+</code></pre><hr>
 <h2 id="awsへのデプロイ">AWSへのデプロイ</h2>
 <p><code>sam deploy --guided</code>でアプリケーションをデプロイします。<br>
 初回のデプロイは設定ファイル<code>samconfig.toml</code>がないため、オプション<code>--guided</code>で対話形式でデプロイします。<br>
 2回目以降は、<code>sam deploy</code>でデプロイできます。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ sam deploy --guided
+<pre><code>$ sam deploy --guided
 
-Configuring SAM <span class="nv">deploy</span>
-<span class="o">======================</span>
+Configuring SAM deploy
+======================
 
-        Looking <span class="k">for</span> config file <span class="o">[</span>samconfig.toml<span class="o">]</span> :  Not found
+        Looking for config file [samconfig.toml] :  Not found
 
-        Setting default arguments <span class="k">for</span> <span class="s1">&#39;sam deploy&#39;</span>
-        <span class="o">=========================================</span>
-        Stack Name <span class="o">[</span>sam-app<span class="o">]</span>: sample-app
-        AWS Region <span class="o">[</span>ap-northeast-1<span class="o">]</span>:
-        Image Repository <span class="k">for</span> HelloWorldFunction: XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world
+        Setting default arguments for 'sam deploy'
+        =========================================
+        Stack Name [sam-app]: sample-app
+        AWS Region [ap-northeast-1]:
+        Image Repository for HelloWorldFunction: XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world
           helloworldfunction:python3.8-v1 to be pushed to XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world:helloworldfunction-XXXX-python3.8-v1
 
-        <span class="c1">#Shows you resources changes to be deployed and require a &#39;Y&#39; to initiate deploy</span>
-        Confirm changes before deploy <span class="o">[</span>y/N<span class="o">]</span>: y
-        <span class="c1">#SAM needs permission to be able to create roles to connect to the resources in your template</span>
-        Allow SAM CLI IAM role creation <span class="o">[</span>Y/n<span class="o">]</span>: Y
-        HelloWorldFunction may not have authorization defined, Is this okay? <span class="o">[</span>y/N<span class="o">]</span>: y
-        Save arguments to configuration file <span class="o">[</span>Y/n<span class="o">]</span>: Y
-        SAM configuration file <span class="o">[</span>samconfig.toml<span class="o">]</span>:
-        SAM configuration environment <span class="o">[</span>default<span class="o">]</span>:
+        #Shows you resources changes to be deployed and require a 'Y' to initiate deploy
+        Confirm changes before deploy [y/N]: y
+        #SAM needs permission to be able to create roles to connect to the resources in your template
+        Allow SAM CLI IAM role creation [Y/n]: Y
+        HelloWorldFunction may not have authorization defined, Is this okay? [y/N]: y
+        Save arguments to configuration file [Y/n]: Y
+        SAM configuration file [samconfig.toml]:
+        SAM configuration environment [default]:
 
-        Looking <span class="k">for</span> resources needed <span class="k">for</span> deployment: Found!
+        Looking for resources needed for deployment: Found!
 
                 Managed S3 bucket: aws-sam-cli-managed-default-samclisourcebucket-XXXX
-                A different default S3 bucket can be <span class="nb">set</span> in samconfig.toml
+                A different default S3 bucket can be set in samconfig.toml
 
         Saved arguments to config file
-        Running <span class="s1">&#39;sam deploy&#39;</span> <span class="k">for</span> future deployments will use the parameters saved above.
+        Running 'sam deploy' for future deployments will use the parameters saved above.
         The above parameters can be changed by modifying samconfig.toml
         Learn more about samconfig.toml syntax at
         https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
 
-The push refers to repository <span class="o">[</span>XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world<span class="o">]</span>
+The push refers to repository [XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world]
 0c67873405d3: Pushed
 fd9b1cf90daf: Pushed
 9edbcf394a04: Layer already exists
@@ -432,29 +432,29 @@ d6fa53d6caa6: Layer already exists
 94573decf7db: Layer already exists
 fafc052823c1: Pushed
 c6507cec3c87: Layer already exists
-helloworldfunction-XXXX-python3.8-v1: digest: sha256:eda15f8fca8821ae22562364f6d312eb8f7f3837a7205ec63981b486ef239240 size: <span class="m">1999</span>
+helloworldfunction-XXXX-python3.8-v1: digest: sha256:eda15f8fca8821ae22562364f6d312eb8f7f3837a7205ec63981b486ef239240 size: 1999
 
 
-        Deploying with following <span class="nv">values</span>
-        <span class="o">===============================</span>
+        Deploying with following values
+        ===============================
         Stack name                   : sample-app
         Region                       : ap-northeast-1
         Confirm changeset            : True
         Deployment image repository  :
-                                       <span class="o">{</span>
-                                           <span class="s2">&#34;HelloWorldFunction&#34;</span>: <span class="s2">&#34;XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world&#34;</span>
-                                       <span class="o">}</span>
+                                       {
+                                           &quot;HelloWorldFunction&quot;: &quot;XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world&quot;
+                                       }
         Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-XXXX
-        Capabilities                 : <span class="o">[</span><span class="s2">&#34;CAPABILITY_IAM&#34;</span><span class="o">]</span>
-        Parameter overrides          : <span class="o">{}</span>
-        Signing Profiles             : <span class="o">{}</span>
+        Capabilities                 : [&quot;CAPABILITY_IAM&quot;]
+        Parameter overrides          : {}
+        Signing Profiles             : {}
 
-Initiating <span class="nv">deployment</span>
-<span class="o">=====================</span>
+Initiating deployment
+=====================
 HelloWorldFunction may not have authorization defined.
-Uploading to sample-app/2c9eb9404cc575576a9fb3b0652ea193.template  <span class="m">1170</span> / <span class="m">1170</span>  <span class="o">(</span>100.00%<span class="o">)</span>
+Uploading to sample-app/2c9eb9404cc575576a9fb3b0652ea193.template  1170 / 1170  (100.00%)
 
-Waiting <span class="k">for</span> changeset to be created..
+Waiting for changeset to be created..
 
 CloudFormation stack changeset
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -473,11 +473,11 @@ Operation                             LogicalResourceId                     Reso
 Changeset created successfully. arn:aws:cloudformation:ap-northeast-1:XXXX:changeSet/samcli-deploy1618403206/8a2eacf7-5e27-4e6c-ab91-41c4e5e6187e
 
 
-Previewing CloudFormation changeset before <span class="nv">deployment</span>
-<span class="o">======================================================</span>
-Deploy this changeset? <span class="o">[</span>y/N<span class="o">]</span>: y
+Previewing CloudFormation changeset before deployment
+======================================================
+Deploy this changeset? [y/N]: y
 
-2021-04-14 21:27:03 - Waiting <span class="k">for</span> stack create/update to <span class="nb">complete</span>
+2021-04-14 21:27:03 - Waiting for stack create/update to complete
 
 CloudFormation events from changeset
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -515,11 +515,11 @@ CloudFormation outputs from deployed stack
 Outputs
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 Key                 HelloWorldFunctionIamRole
-Description         Implicit IAM Role created <span class="k">for</span> Hello World <span class="k">function</span>
+Description         Implicit IAM Role created for Hello World function
 Value               arn:aws:iam::XXXX:role/sample-app-HelloWorldFunctionRole-XXXX
 
 Key                 HelloWorldApi
-Description         API Gateway endpoint URL <span class="k">for</span> Prod stage <span class="k">for</span> Hello World <span class="k">function</span>
+Description         API Gateway endpoint URL for Prod stage for Hello World function
 Value               https://XXXX.execute-api.ap-northeast-1.amazonaws.com/Prod/hello/
 
 Key                 HelloWorldFunction
@@ -530,27 +530,27 @@ Value               arn:aws:lambda:ap-northeast-1:XXXX:function:sample-app-Hello
 Successfully created/updated stack - sample-app in ap-northeast-1
 
 $
-</code></pre></div><ul>
+</code></pre><ul>
 <li>作成された<code>samconfig.toml</code></li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ cat samconfig.toml
-<span class="nv">version</span> <span class="o">=</span> 0.1
-<span class="o">[</span>default<span class="o">]</span>
-<span class="o">[</span>default.deploy<span class="o">]</span>
-<span class="o">[</span>default.deploy.parameters<span class="o">]</span>
-<span class="nv">stack_name</span> <span class="o">=</span> <span class="s2">&#34;sample-app&#34;</span>
-<span class="nv">s3_bucket</span> <span class="o">=</span> <span class="s2">&#34;aws-sam-cli-managed-default-samclisourcebucket-XXXX&#34;</span>
-<span class="nv">s3_prefix</span> <span class="o">=</span> <span class="s2">&#34;sample-app&#34;</span>
-<span class="nv">region</span> <span class="o">=</span> <span class="s2">&#34;ap-northeast-1&#34;</span>
-<span class="nv">confirm_changeset</span> <span class="o">=</span> <span class="nb">true</span>
-<span class="nv">capabilities</span> <span class="o">=</span> <span class="s2">&#34;CAPABILITY_IAM&#34;</span>
-<span class="nv">image_repositories</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&#34;HelloWorldFunction=XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world&#34;</span><span class="o">]</span>
-</code></pre></div><hr>
+<pre><code>$ cat samconfig.toml
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = &quot;sample-app&quot;
+s3_bucket = &quot;aws-sam-cli-managed-default-samclisourcebucket-XXXX&quot;
+s3_prefix = &quot;sample-app&quot;
+region = &quot;ap-northeast-1&quot;
+confirm_changeset = true
+capabilities = &quot;CAPABILITY_IAM&quot;
+image_repositories = [&quot;HelloWorldFunction=XXXX.dkr.ecr.ap-northeast-1.amazonaws.com/hello-world&quot;]
+</code></pre><hr>
 <h2 id="アプリケーションの削除">アプリケーションの削除</h2>
 <p>下記のコマンドでデプロイしたアプリケーションを削除できます。<br>
 ただし、ECRに登録したコンテナイメージは削除されません。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">aws cloudformation delete-stack --stack-name sample-app
-</code></pre></div><hr>
+<pre><code>aws cloudformation delete-stack --stack-name sample-app
+</code></pre><hr>
 
 
         
@@ -633,6 +633,10 @@ $
 
       
         <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://ryosh.github.io/posts/my-first-post/" data-toggle="tooltip" data-placement="top" title="Hugoの使い方のメモ">&larr; Previous Post</a>
+            </li>
           
           
         </ul>

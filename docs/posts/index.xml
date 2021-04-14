@@ -19,5 +19,18 @@ $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli
 $ sam init Which template source would you like to use? 1 - AWS Quick Start Templates 2 - Custom Template Location Choice: 1 What package type would you like to use? 1 - Zip (artifact is a zip uploaded to S3) 2 - Image (artifact is an image uploaded to an ECR image repository) Package type: 2 Which base image would you like to use?</description>
     </item>
     
+    <item>
+      <title>Hugoの使い方のメモ</title>
+      <link>https://ryosh.github.io/posts/my-first-post/</link>
+      <pubDate>Wed, 14 Apr 2021 07:02:09 +0900</pubDate>
+      
+      <guid>https://ryosh.github.io/posts/my-first-post/</guid>
+      <description>ローカルサーバーの起動
+hugo server -D 記事の作成
+hugo new posts/my-first-post.md ローカルサーバー起動中に、hugo new posts/xxxを実行すると、このエラーになる。
+Error: Unable to locate config file or config directory. Perhaps you need to create a new site. Run `hugo help new` for details. HTMLの作成。
+hugo  </description>
+    </item>
+    
   </channel>
 </rss>

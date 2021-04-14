@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on ryosh.github.io</title>
+    <link>https://ryosh.github.io/tags/hugo/</link>
+    <description>Recent content in hugo on ryosh.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 14 Apr 2021 07:02:09 +0900</lastBuildDate><atom:link href="https://ryosh.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugoの使い方のメモ</title>
+      <link>https://ryosh.github.io/posts/my-first-post/</link>
+      <pubDate>Wed, 14 Apr 2021 07:02:09 +0900</pubDate>
+      
+      <guid>https://ryosh.github.io/posts/my-first-post/</guid>
+      <description>ローカルサーバーの起動
+hugo server -D 記事の作成
+hugo new posts/my-first-post.md ローカルサーバー起動中に、hugo new posts/xxxを実行すると、このエラーになる。
+Error: Unable to locate config file or config directory. Perhaps you need to create a new site. Run `hugo help new` for details. HTMLの作成。
+hugo  </description>
+    </item>
+    
+  </channel>
+</rss>
