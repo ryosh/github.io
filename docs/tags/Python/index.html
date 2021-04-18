@@ -231,7 +231,7 @@
 $ tree . . ├── README.md ├── basic_auth_function │ ├── app.py │ └── requirements.txt ├── hello_world_function │ ├── app.py │ └── requirements.txt ├── samconfig.toml └── template.yaml  Basic認証処理を行うLambda関数 Basic認証を行うLambda関数です。
 ユーザー名、パスワードはテキトーです。
 basic_auth_function/app.py:
-import json import base64 def lambda_handler(event, context): user_id = &#39;adminxx&#39; password = &#39;passwordxx&#39; auth_str = &#39;Basic &#39; + base64.
+import json import base64 def lambda_handler(event, context): user_id = 'adminxx' password = 'passwordxx' auth_str = 'Basic ' + base64.
         <a href="https://ryosh.github.io/posts/20210418/" class="post-read-more">[Read More]</a>
         
     </div>

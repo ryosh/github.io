@@ -64,9 +64,9 @@ import json import base64 def lambda_handler(event, context): user_id = &#39;adm
     "name" : "ryosh"
   },
   "headline": "SAMでLambda関数にBasic認証をかける",
-  "description" : "AWS SAMで作成したLambda関数にBasic認証をかける方法についてのメモです。\nマネジメントコンソールでの操作についての記事はいくつかありましたが、 SAM CLIのみで設定する方法が見つからなかったので試してみました。\n 環境 $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli\/2.1.34 Python\/3.8.8 Linux\/5.4.0-52-generic exe\/x86_64.ubuntu.20 prompt\/off $ sam --version SAM CLI, version 1.21.1 Lambda関数はzip形式で作成しました。\n 構成 SAMのHelloWorldのテンプレートで作成したディレクトリをベースに 下記の構成にしました。\n$ tree . . ├── README.md ├── basic_auth_function │ ├── app.py │ └── requirements.txt ├── hello_world_function │ ├── app.py │ └── requirements.txt ├── samconfig.toml └── template.yaml  Basic認証処理を行うLambda関数 Basic認証を行うLambda関数です。\nユーザー名、パスワードはテキトーです。\nbasic_auth_function\/app.py:\nimport json import base64 def lambda_handler(event, context): user_id = \u0026#39;adminxx\u0026#39; password = \u0026#39;passwordxx\u0026#39; auth_str = \u0026#39;Basic \u0026#39; \u002b base64.",
+  "description" : "AWS SAMで作成したLambda関数にBasic認証をかける方法についてのメモです。\nマネジメントコンソールでの操作についての記事はいくつかありましたが、 SAM CLIのみで設定する方法が見つからなかったので試してみました。\n 環境 $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli\/2.1.34 Python\/3.8.8 Linux\/5.4.0-52-generic exe\/x86_64.ubuntu.20 prompt\/off $ sam --version SAM CLI, version 1.21.1 Lambda関数はzip形式で作成しました。\n 構成 SAMのHelloWorldのテンプレートで作成したディレクトリをベースに 下記の構成にしました。\n$ tree . . ├── README.md ├── basic_auth_function │ ├── app.py │ └── requirements.txt ├── hello_world_function │ ├── app.py │ └── requirements.txt ├── samconfig.toml └── template.yaml  Basic認証処理を行うLambda関数 Basic認証を行うLambda関数です。\nユーザー名、パスワードはテキトーです。\nbasic_auth_function\/app.py:\nimport json import base64 def lambda_handler(event, context): user_id = \u0027adminxx\u0027 password = \u0027passwordxx\u0027 auth_str = \u0027Basic \u0027 \u002b base64.",
   "inLanguage" : "en",
-  "wordCount":  247 ,
+  "wordCount":  333 ,
   "datePublished" : "2021-04-18T19:07:23",
   "dateModified" : "2021-04-18T19:07:23",
   "image" : "https:\/\/ryosh.github.io\/img\/avatar-icon.png",
@@ -293,114 +293,114 @@ SAM CLI, version 1.21.1
 <p>Basic認証を行うLambda関数です。<br>
 ユーザー名、パスワードはテキトーです。<br>
 <code>basic_auth_function/app.py</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">base64</span>
+<pre><code>import json
+import base64
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="n">user_id</span> <span class="o">=</span> <span class="s1">&#39;adminxx&#39;</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;passwordxx&#39;</span>
+def lambda_handler(event, context):
+    user_id = 'adminxx'
+    password = 'passwordxx'
 
-    <span class="n">auth_str</span> <span class="o">=</span> <span class="s1">&#39;Basic &#39;</span> <span class="o">+</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;{user_id}:{password}&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>
+    auth_str = 'Basic ' + base64.b64encode(f&quot;{user_id}:{password}&quot;.encode(&quot;utf-8&quot;)).decode(&quot;ascii&quot;)
     
-    <span class="n">auth_header</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;headers&#39;</span><span class="p">][</span><span class="s1">&#39;Authorization&#39;</span><span class="p">]</span>
+    auth_header = event['headers']['Authorization']
     
-    <span class="k">if</span> <span class="n">auth_str</span> <span class="o">!=</span> <span class="n">auth_header</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Unauthorized&#39;</span><span class="p">)</span>
+    if auth_str != auth_header:
+        raise Exception('Unauthorized')
     
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="s1">&#39;principalId&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
-      <span class="s1">&#39;policyDocument&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span>
-            <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;execute-api:Invoke&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Resource&#39;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;methodArn&#39;</span><span class="p">]</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-</code></pre></div><hr>
+    return {
+      'principalId': user_id,
+      'policyDocument': {
+        'Version': '2012-10-17',
+        'Statement': [
+          {
+            'Action': 'execute-api:Invoke',
+            'Effect': 'Allow',
+            'Resource': event['methodArn']
+          }
+        ]
+      }
+    }
+</code></pre><hr>
 <h4 id="認証処理をかけるapi">認証処理をかけるAPI</h4>
 <p><code>hello world</code>を返すだけです。<br>
 <code>hello_world_function/app.py</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
+<pre><code>import json
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&#34;statusCode&#34;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s2">&#34;body&#34;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-            <span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;hello world&#34;</span><span class="p">,</span>
-        <span class="p">}),</span>
-    <span class="p">}</span>
-</code></pre></div><hr>
+def lambda_handler(event, context):
+    return {
+        &quot;statusCode&quot;: 200,
+        &quot;body&quot;: json.dumps({
+            &quot;message&quot;: &quot;hello world&quot;,
+        }),
+    }
+</code></pre><hr>
 <h4 id="samのtemplateファイル">SAMのTemplateファイル</h4>
 <p><code>template.yaml</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">AWSTemplateFormatVersion</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2010-09-09&#39;</span><span class="w">
-</span><span class="w"></span><span class="nt">Transform</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless-2016-10-31</span><span class="w">
-</span><span class="w"></span><span class="nt">Description</span><span class="p">:</span><span class="w"> </span><span class="p">&gt;</span><span class="sd">
-</span><span class="sd">  hello-world-auth
-</span><span class="sd">  Sample SAM Template for hello-world-auth</span><span class="w">  
-</span><span class="w">
-</span><span class="w"></span><span class="nt">Globals</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">Function</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Timeout</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">Resources</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">HelloWorldApi</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless::Api</span><span class="w">
-</span><span class="w">    </span><span class="nt">Properties</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">StageName</span><span class="p">:</span><span class="w"> </span><span class="l">Prod</span><span class="w">
-</span><span class="w">      </span><span class="nt">GatewayResponses</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">UNAUTHORIZED</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">ResponseParameters</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="nt">Headers</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="nt">WWW-Authenticate</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#39;Basic&#39;&#34;</span><span class="w">
-</span><span class="w">      </span><span class="nt">Auth</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">AddDefaultAuthorizerToCorsPreflight</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="w">        </span><span class="nt">DefaultAuthorizer</span><span class="p">:</span><span class="w"> </span><span class="l">LambdaRequestAuthorizer</span><span class="w">
-</span><span class="w">        </span><span class="nt">Authorizers</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">LambdaRequestAuthorizer</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="nt">FunctionPayloadType</span><span class="p">:</span><span class="w"> </span><span class="l">REQUEST</span><span class="w">
-</span><span class="w">            </span><span class="nt">FunctionArn</span><span class="p">:</span><span class="w"> </span>!<span class="l">GetAtt BasicAuthFunction.Arn</span><span class="w">
-</span><span class="w">            </span><span class="nt">Identity</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="nt">Headers</span><span class="p">:</span><span class="w">
-</span><span class="w">                </span>- <span class="l">Authorization</span><span class="w">
-</span><span class="w">              </span><span class="nt">ReauthorizeEvery</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
-</span><span class="w">
-</span><span class="w">  </span><span class="nt">HelloWorldFunction</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless::Function</span><span class="w">
-</span><span class="w">    </span><span class="nt">Properties</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">CodeUri</span><span class="p">:</span><span class="w"> </span><span class="l">hello_world_function/</span><span class="w">
-</span><span class="w">      </span><span class="nt">Handler</span><span class="p">:</span><span class="w"> </span><span class="l">app.lambda_handler</span><span class="w">
-</span><span class="w">      </span><span class="nt">Runtime</span><span class="p">:</span><span class="w"> </span><span class="l">python3.8</span><span class="w">
-</span><span class="w">      </span><span class="nt">Events</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">GetRoot</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l">Api</span><span class="w">
-</span><span class="w">          </span><span class="nt">Properties</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="nt">RestApiId</span><span class="p">:</span><span class="w"> </span>!<span class="l">Ref HelloWorldApi</span><span class="w">
-</span><span class="w">            </span><span class="nt">Path</span><span class="p">:</span><span class="w"> </span><span class="l">/hello</span><span class="w">
-</span><span class="w">            </span><span class="nt">Method</span><span class="p">:</span><span class="w"> </span><span class="l">get</span><span class="w">
-</span><span class="w">
-</span><span class="w">  </span><span class="nt">BasicAuthFunction</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless::Function</span><span class="w">
-</span><span class="w">    </span><span class="nt">Properties</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">CodeUri</span><span class="p">:</span><span class="w"> </span><span class="l">basic_auth_function/</span><span class="w">
-</span><span class="w">      </span><span class="nt">Handler</span><span class="p">:</span><span class="w"> </span><span class="l">app.lambda_handler</span><span class="w">
-</span><span class="w">      </span><span class="nt">Runtime</span><span class="p">:</span><span class="w"> </span><span class="l">python3.8</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">Outputs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">HelloWorldApi</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Description</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;API Gateway endpoint URL for Prod stage for Hello World function&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">Value</span><span class="p">:</span><span class="w"> </span>!<span class="l">Sub &#34;https://${HelloWorldApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">HelloWorldFunction</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Description</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Hello World Lambda Function ARN&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">Value</span><span class="p">:</span><span class="w"> </span>!<span class="l">GetAtt HelloWorldFunction.Arn</span><span class="w">
-</span><span class="w">  </span><span class="nt">HelloWorldFunctionIamRole</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">Description</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Implicit IAM Role created for Hello World function&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">Value</span><span class="p">:</span><span class="w"> </span>!<span class="l">GetAtt HelloWorldFunctionRole.Arn</span><span class="w">
-</span><span class="w">
-</span></code></pre></div><ul>
+<pre><code>AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: &gt;
+  hello-world-auth
+  Sample SAM Template for hello-world-auth
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  HelloWorldApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      GatewayResponses:
+        UNAUTHORIZED:
+          ResponseParameters:
+            Headers:
+              WWW-Authenticate: &quot;'Basic'&quot;
+      Auth:
+        AddDefaultAuthorizerToCorsPreflight: false
+        DefaultAuthorizer: LambdaRequestAuthorizer
+        Authorizers:
+          LambdaRequestAuthorizer:
+            FunctionPayloadType: REQUEST
+            FunctionArn: !GetAtt BasicAuthFunction.Arn
+            Identity:
+              Headers:
+                - Authorization
+              ReauthorizeEvery: 300
+
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello_world_function/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        GetRoot:
+          Type: Api
+          Properties:
+            RestApiId: !Ref HelloWorldApi
+            Path: /hello
+            Method: get
+
+  BasicAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: basic_auth_function/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+
+Outputs:
+  HelloWorldApi:
+    Description: &quot;API Gateway endpoint URL for Prod stage for Hello World function&quot;
+    Value: !Sub &quot;https://${HelloWorldApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/&quot;
+  HelloWorldFunction:
+    Description: &quot;Hello World Lambda Function ARN&quot;
+    Value: !GetAtt HelloWorldFunction.Arn
+  HelloWorldFunctionIamRole:
+    Description: &quot;Implicit IAM Role created for Hello World function&quot;
+    Value: !GetAtt HelloWorldFunctionRole.Arn
+
+</code></pre><ul>
 <li><code>HelloWorldApi</code>: <code>HelloWorldFunction</code>を実行するためのエンドポイント。<br>
 API Gatewayのオーソライザーとして<code>BasicAuthFunction</code>を設定し、Basic認証します。</li>
 <li><code>HelloWorldFunction</code>:  <code>hello world</code>を返すAPI、Basic認証された場合に実行されます。</li>
