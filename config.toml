@@ -9,6 +9,7 @@ publishDir = "docs"
 pygmentsUseClasses = true
 pygmentsCodeFences = true
 disablePathToLower = true
+enableRobotsTXT = true
 
 [Params]
     useHLJS = true
