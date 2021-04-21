@@ -6,20 +6,29 @@
     <description>Recent content in Tags on ryosh.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Apr 2021 19:07:23 +0900</lastBuildDate><atom:link href="https://ryosh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Apr 2021 21:31:29 +0900</lastBuildDate><atom:link href="https://ryosh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS</title>
       <link>https://ryosh.github.io/tags/AWS/</link>
-      <pubDate>Sun, 18 Apr 2021 19:07:23 +0900</pubDate>
+      <pubDate>Wed, 21 Apr 2021 21:31:29 +0900</pubDate>
       
       <guid>https://ryosh.github.io/tags/AWS/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>Flask</title>
+      <link>https://ryosh.github.io/tags/Flask/</link>
+      <pubDate>Wed, 21 Apr 2021 21:31:29 +0900</pubDate>
+      
+      <guid>https://ryosh.github.io/tags/Flask/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Lambda</title>
       <link>https://ryosh.github.io/tags/Lambda/</link>
-      <pubDate>Sun, 18 Apr 2021 19:07:23 +0900</pubDate>
+      <pubDate>Wed, 21 Apr 2021 21:31:29 +0900</pubDate>
       
       <guid>https://ryosh.github.io/tags/Lambda/</guid>
       <description></description>
@@ -28,7 +37,7 @@
     <item>
       <title>Python</title>
       <link>https://ryosh.github.io/tags/Python/</link>
-      <pubDate>Sun, 18 Apr 2021 19:07:23 +0900</pubDate>
+      <pubDate>Wed, 21 Apr 2021 21:31:29 +0900</pubDate>
       
       <guid>https://ryosh.github.io/tags/Python/</guid>
       <description></description>
@@ -37,7 +46,7 @@
     <item>
       <title>SAM</title>
       <link>https://ryosh.github.io/tags/SAM/</link>
-      <pubDate>Sun, 18 Apr 2021 19:07:23 +0900</pubDate>
+      <pubDate>Wed, 21 Apr 2021 21:31:29 +0900</pubDate>
       
       <guid>https://ryosh.github.io/tags/SAM/</guid>
       <description></description>

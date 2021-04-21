@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="5gtO9QiM8ghME0oefEGG3vVvpJRPhnORXmQZCT78wfw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>AWS LambdaでPython&#43;Flask環境を作成する - ryosh.github.io</title>
+  <meta name="description" content="AWS SAM &#43; Lambda &#43; Python &#43; Flask の環境を作成する方法を調べたのでメモにします。
+ 環境 $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli/2.1.34 Python/3.8.8 Linux/5.4.0-52-generic exe/x86_64.ubuntu.20 prompt/off $ sam --version SAM CLI, version 1.21.1  SAMでプロジェクトの作成 sam initでプロジェクトを作成します。
+Zip形式、Image形式のでどちらでも大丈夫です。
+構成:
+. ├── README.md ├── hello_world │ ├── app.py │ ├── requirements.txt │ ├── static │ │ └── js │ │ └── script.js │ └── templates │ └── index.html ├── samconfig.toml └── template.">
+  <meta name="author" content="ryosh"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "ryosh.github.io",
+    
+    "url": "https:\/\/ryosh.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/ryosh.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/ryosh.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/ryosh.github.io\/posts\/20210421\/",
+          "name": "Aws lambdaで python flask環境を作成する"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "ryosh"
+  },
+  "headline": "AWS LambdaでPython\u002bFlask環境を作成する",
+  "description" : "AWS SAM \u002b Lambda \u002b Python \u002b Flask の環境を作成する方法を調べたのでメモにします。\n 環境 $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli\/2.1.34 Python\/3.8.8 Linux\/5.4.0-52-generic exe\/x86_64.ubuntu.20 prompt\/off $ sam --version SAM CLI, version 1.21.1  SAMでプロジェクトの作成 sam initでプロジェクトを作成します。\nZip形式、Image形式のでどちらでも大丈夫です。\n構成:\n. ├── README.md ├── hello_world │ ├── app.py │ ├── requirements.txt │ ├── static │ │ └── js │ │ └── script.js │ └── templates │ └── index.html ├── samconfig.toml └── template.",
+  "inLanguage" : "en",
+  "wordCount":  217 ,
+  "datePublished" : "2021-04-21T21:31:29",
+  "dateModified" : "2021-04-21T21:31:29",
+  "image" : "https:\/\/ryosh.github.io\/img\/avatar-icon.png",
+  "keywords" : [ "AWS, Lambda, SAM, Python, Flask" ],
+  "mainEntityOfPage" : "https:\/\/ryosh.github.io\/posts\/20210421\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/ryosh.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/ryosh.github.io\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="AWS LambdaでPython&#43;Flask環境を作成する" />
+<meta property="og:description" content="AWS SAM &#43; Lambda &#43; Python &#43; Flask の環境を作成する方法を調べたのでメモにします。
+ 環境 $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli/2.1.34 Python/3.8.8 Linux/5.4.0-52-generic exe/x86_64.ubuntu.20 prompt/off $ sam --version SAM CLI, version 1.21.1  SAMでプロジェクトの作成 sam initでプロジェクトを作成します。
+Zip形式、Image形式のでどちらでも大丈夫です。
+構成:
+. ├── README.md ├── hello_world │ ├── app.py │ ├── requirements.txt │ ├── static │ │ └── js │ │ └── script.js │ └── templates │ └── index.html ├── samconfig.toml └── template.">
+<meta property="og:image" content="https://ryosh.github.io/img/avatar-icon.png" />
+<meta property="og:url" content="https://ryosh.github.io/posts/20210421/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ryosh.github.io" />
+
+  <meta name="twitter:title" content="AWS LambdaでPython&#43;Flask環境を作成する" />
+  <meta name="twitter:description" content="AWS SAM &#43; Lambda &#43; Python &#43; Flask の環境を作成する方法を調べたのでメモにします。
+ 環境 $ docker --version Docker version 20.10.5, build 55c4c88 $ aws --version aws-cli/2.1.34 Python/3.8.8 Linux/5.4.0-52-generic …">
+  <meta name="twitter:image" content="https://ryosh.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://ryosh.github.io/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <link rel="alternate" href="https://ryosh.github.io/index.xml" type="application/rss+xml" title="ryosh.github.io"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://ryosh.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://ryosh.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://ryosh.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://ryosh.github.io/">ryosh.github.io</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="ryosh.github.io" href="https://ryosh.github.io/">
+            <img class="avatar-img" src="https://ryosh.github.io/img/avatar-icon.png" alt="ryosh.github.io" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>AWS LambdaでPython&#43;Flask環境を作成する</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>AWS SAM + Lambda + Python + Flask の環境を作成する方法を調べたのでメモにします。</p>
+<hr>
+<h2 id="環境">環境</h2>
+<pre><code>$ docker --version
+Docker version 20.10.5, build 55c4c88
+$ aws --version
+aws-cli/2.1.34 Python/3.8.8 Linux/5.4.0-52-generic exe/x86_64.ubuntu.20 prompt/off
+$ sam --version
+SAM CLI, version 1.21.1
+</code></pre><hr>
+<h2 id="samでプロジェクトの作成">SAMでプロジェクトの作成</h2>
+<p><code>sam init</code>でプロジェクトを作成します。<br>
+Zip形式、Image形式のでどちらでも大丈夫です。<br>
+構成:</p>
+<pre><code>.
+├── README.md
+├── hello_world
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── static
+│   │   └── js
+│   │       └── script.js
+│   └── templates
+│       └── index.html
+├── samconfig.toml
+└── template.yaml
+</code></pre><hr>
+<h2 id="lambda関数の実装">Lambda関数の実装</h2>
+<hr>
+<h3 id="テンプレートtemplateyamlの修正">テンプレート(<code>template.yaml</code>)の修正</h3>
+<p>ルーティングはFlaskのアノテーションを使いたいので、<br>
+API Gatewayの設定は、<code>Path: '/{proxy+}'</code>、<code>Method: ANY</code>にしてすべてのリクエストを
+Lambda関数で処理できるようにします。<br>
+<code>template.yaml</code>:</p>
+<pre><code>  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: 'sample-flask'
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        ApiRoot:
+          Type: Api
+          Properties:
+            Path: '/'
+            Method: ANY
+        ApiProxy:
+          Type: Api
+          Properties:
+            Path: '/{proxy+}'
+            Method: ANY
+</code></pre><hr>
+<h2 id="依存モジュールの設定">依存モジュールの設定</h2>
+<p><code>aws-wsgi</code>を使用して、LambdaのeventをFlaskで処理できるようにします。</p>
+<p><code>requirements.txt</code>:</p>
+<pre><code>requests
+Flask
+aws-wsgi
+</code></pre><p>参考URL:<br>
+AWSGI<br>
+<a href="https://github.com/slank/awsgi">https://github.com/slank/awsgi</a></p>
+<hr>
+<h2 id="flaskアプリケーションの実装">Flaskアプリケーションの実装</h2>
+<p><code>lambda_handler</code>で、AWSGIを使用して、Flaskのアプリケーションを実行します。<br>
+それ以外は、通常のFlaskのアプリケーションと同様に実装します。</p>
+<p><code>app.py</code>:</p>
+<pre><code>import awsgi
+from flask import Flask, request, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/hello', methods=['GET'])
+def hello_get():
+    return {'msg': 'get method'}
+
+@app.route('/hello', methods=['POST'])
+def hello_post():
+    return {'msg': 'post method'}
+
+def lambda_handler(event, context):
+    return awsgi.response(app, event, context)
+</code></pre><p><code>templates/index.html</code></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;ja&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+    &lt;title&gt;Hello Lambda&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello Lambda&lt;/h1&gt;
+    &lt;button onclick=&quot;helloLambda()&quot;&gt;click me!!&lt;/button&gt;
+    &lt;script src=&quot;static/js/script.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p><code>static/js/script.js</code></p>
+<pre><code>function helloLambda() {
+    alert('Hello Lambda');
+}
+</code></pre><hr>
+<h2 id="実行結果">実行結果</h2>
+<p><code>sam build</code>、<code>sam deploy</code>でデプロイし実行した結果です。</p>
+<p><code>GET /hello</code></p>
+<pre><code>$ curl https://XXXX.execute-api.ap-northeast-1.amazonaws.com/Prod/hello
+{&quot;msg&quot;:&quot;get method&quot;}
+</code></pre><p><code>POST /hello</code></p>
+<pre><code>curl -X POST https://XXXX.execute-api.ap-northeast-1.amazonaws.com/Prod/hello
+{&quot;msg&quot;:&quot;post method&quot;}
+</code></pre><p>ブラウザでのアクセス<br>
+Javascriptも動作します。
+
+<link rel="stylesheet" href="https://ryosh.github.io/css/hugo-easy-gallery.css" />
+<div class="box" style="max-width:320">
+  <figure class="center" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/images/20210421.png" alt="/images/20210421.png"/>
+    </div>
+    <a href="/images/20210421.png" itemprop="contentUrl"></a>
+      <figcaption><h4>Screenshot</h4>
+      </figcaption>
+  </figure>
+</div>
+</p>
+<hr>
+<p>Lambdaはレスポンスのサイズに制限がありますが、
+ちょっとしたWebアプリの作成なら、Lambdaだけでできそうです。</p>
+<hr>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://ryosh.github.io//tags/AWS/">AWS</a>&nbsp;
+            
+              <a href="https://ryosh.github.io//tags/Lambda/">Lambda</a>&nbsp;
+            
+              <a href="https://ryosh.github.io//tags/SAM/">SAM</a>&nbsp;
+            
+              <a href="https://ryosh.github.io//tags/Python/">Python</a>&nbsp;
+            
+              <a href="https://ryosh.github.io//tags/Flask/">Flask</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fryosh.github.io%2fposts%2f20210421%2f&amp;text=AWS%20Lambda%e3%81%a7Python%2bFlask%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fryosh.github.io%2fposts%2f20210421%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fryosh.github.io%2fposts%2f20210421%2f&amp;title=AWS%20Lambda%e3%81%a7Python%2bFlask%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fryosh.github.io%2fposts%2f20210421%2f&amp;title=AWS%20Lambda%e3%81%a7Python%2bFlask%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fryosh.github.io%2fposts%2f20210421%2f&amp;title=AWS%20Lambda%e3%81%a7Python%2bFlask%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fryosh.github.io%2fposts%2f20210421%2f&amp;description=AWS%20Lambda%e3%81%a7Python%2bFlask%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/posts/20210418/">SAMでLambda関数にBasic認証をかける</a></li>
+                
+                    <li><a href="/posts/20210414/">SAMでLambdaのアプリケーションを作成する</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://ryosh.github.io/posts/20210418/" data-toggle="tooltip" data-placement="top" title="SAMでLambda関数にBasic認証をかける">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/ryosh" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              ryosh
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2021
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://ryosh.github.io/">ryosh.github.io</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.82.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://ryosh.github.io/js/main.js"></script>
+<script src="https://ryosh.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://ryosh.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
